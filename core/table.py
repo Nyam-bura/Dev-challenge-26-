@@ -1,11 +1,5 @@
 class Table:
     def __init__(self, name, columns, primary_key=None, unique_keys=None):
-        """
-        name: table name
-        columns: dict of column_name -> type instance
-        primary_key: single column name
-        unique_keys: list of column names with unique constraint
-        """
         self.name = name
         self.columns = columns
         self.rows = []
@@ -16,7 +10,7 @@ class Table:
         # Simple indexing for primary key and unique keys
         self.indexes = {}
         if primary_key:
-            self.indexes[primary_key] = {}  # value -> row
+            self.indexes[primary_key] = {}  
         for key in self.unique_keys:
             self.indexes[key] = {}
 

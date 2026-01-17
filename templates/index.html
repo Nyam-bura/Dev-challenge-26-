@@ -2,6 +2,11 @@
 <html>
   <head>
     <title>MiniDB Book Library</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   </head>
   <body>
     <h1>Books</h1>
@@ -11,7 +16,7 @@
         <th>Title</th>
         <th>Author</th>
         <th>Year</th>
-        <th>Actions</th>
+        <th>Action</th>
       </tr>
       {% for book in books %}
       <tr>
@@ -20,29 +25,55 @@
         <td>{{ book.author }}</td>
         <td>{{ book.year }}</td>
         <td>
-          <form
-            action="{{ url_for('update_book', id=book.id) }}"
-            method="post"
-            style="display: inline"
-          >
+          <!-- <form action="{{ url_for('update_book', id=book.id) }}" method="post">
             <input type="text" name="title" placeholder="New title" />
             <input type="text" name="author" placeholder="New author" />
             <input type="text" name="year" placeholder="New year" />
             <button type="submit">Update</button>
-          </form>
-          <a href="{{ url_for('delete_book', id=book.id) }}">Delete</a>
+          </form> -->
+            <button class="update-btn"> <i class="fas fa-pencil"></i> </button>
+            <a class="delete-btn" href="{{ url_for('delete_book', id=book.id) }}">
+              <i class="fas fa-trash"></i>
+            </a>
         </td>
       </tr>
       {% endfor %}
     </table>
 
-    <h2>Add New Book</h2>
-    <form action="{{ url_for('add_book') }}" method="post">
-      ID: <input type="text" name="id" /> Title:
-      <input type="text" name="title" /> Author:
-      <input type="text" name="author" /> Year:
-      <input type="text" name="year" />
-      <button type="submit">Add Book</button>
-    </form>
+    <section class="new-book">
+      <div class="header">
+        <h2>Add New Book</h2>
+        <i class="fas fa-plus"></i>
+      </div>
+      <form action="{{ url_for('add_book') }}" class="add-form" method="post">
+        <div class="input-container">
+          <div class="form-group">
+            <label>ID</label>
+            <input type="text" name="id" />
+          </div>
+          <div class="form-group">
+            <label for="title">Title</label>
+            <input type="text" id="title" name="title" />
+          </div>
+        </div>
+
+        <div class="input-container">
+          <div class="form-group">
+            <label for="author">Author</label>
+            <input type="text" id="author" name="author" />
+          </div>
+          <div class="form-group">
+            <label for="year">Year</label>
+            <input type="text" id="year" name="year" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <button type="submit" class="submit-btn">Add Book
+            <i class="fas fa-plus"></i>
+          </button>
+        </div>
+      </form>
+    </div>
   </body>
 </html>
