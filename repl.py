@@ -1,8 +1,6 @@
-# repl.py
 from core.database import Database
 from core.types import Integer, Text
 
-# Create a global database instance
 db = Database("MiniDB")
 
 def parse_command(cmd):
@@ -17,7 +15,6 @@ def parse_command(cmd):
         if action == "CREATE":
             if tokens[1].upper() == "TABLE":
                 table_name = tokens[2]
-                # Simplified: columns in format: col:type (comma separated)
                 cols_def = cmd[cmd.index("(")+1 : cmd.index(")")]
                 columns = {}
                 for col_def in cols_def.split(","):
@@ -31,15 +28,12 @@ def parse_command(cmd):
                         return
                 db.create_table(table_name, columns)
         elif action == "INSERT":
-            # Format: INSERT INTO table VALUES val1,val2,...
             table_name = tokens[2]
             vals = cmd[cmd.index("(")+1 : cmd.index(")")].split(",")
             table = db.get_table(table_name)
-            # Map values to columns order
             row = {}
             for col_name, val in zip(table.columns.keys(), vals):
                 val = val.strip()
-                # Convert INT if needed
                 if isinstance(table.columns[col_name], Integer):
                     val = int(val)
                 row[col_name] = val
@@ -51,7 +45,6 @@ def parse_command(cmd):
         elif action == "DELETE":
             table_name = tokens[2]
             table = db.get_table(table_name)
-            # Simple WHERE col=val
             where_clause = cmd.upper().split("WHERE")[1].strip()
             col, val = [x.strip() for x in where_clause.split("=")]
             if isinstance(table.columns[col], Integer):
@@ -70,7 +63,6 @@ def parse_command(cmd):
                 pk_val = int(pk_val)
             table.update(pk_val, {col_to_set: new_val})
         elif action == "JOIN":
-            # Format: JOIN table1.table2 ON table1.col=table2.col
             parts = cmd.split()
             table1_name = parts[1]
             table2_name = parts[2]

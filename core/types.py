@@ -1,11 +1,5 @@
-# core/types.py
-
 class DataType:
-    """
-    Base class for all data types.
-    Represents the 'domain' concept from database theory.
-    """
-
+    
     def validate(self, value):
         raise NotImplementedError("Subclasses must implement validate()")
 

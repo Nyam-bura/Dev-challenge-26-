@@ -21,9 +21,8 @@ books = db.create_table(
     unique_keys=["title"]
 )
 
-# Add some sample data
 books.insert({"id": 1, "title": "1984", "author": "George Orwell", "year": 1949})
-books.insert({"id": 2, "title": "Brave New World", "author": "Aldous Huxley", "year": 1932})
+books.insert({"id": 2, "title": "Brave New World", "author": "Aldous Huxley","year":1932})
 
 # Routes
 
@@ -34,11 +33,10 @@ def index():
 @app.route("/add", methods=["POST"])
 def add_book():
     try:
-        id = int(request.form["id"])
         title = request.form["title"]
         author = request.form["author"]
         year = int(request.form["year"])
-        books.insert({"id": id, "title": title, "author": author, "year": year})
+        books.insert({"title": title, "author": author, "year": year})
     except Exception as e:
         return f"Error: {e}"
     return redirect(url_for("index"))
